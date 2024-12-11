@@ -31,7 +31,7 @@ void *tree_sitter_sql_external_scanner_destroy(void *payload) {
   return NULL;
 }
 
-char* add_char(char* text, size_t* text_size, char c, int index) {
+static char* add_char(char* text, size_t* text_size, char c, int index) {
   if (text == NULL) {
     text = malloc(sizeof(char) * MALLOC_STRING_SIZE);
     *text_size = MALLOC_STRING_SIZE;
@@ -51,7 +51,7 @@ char* add_char(char* text, size_t* text_size, char c, int index) {
   return text;
 }
 
-char* scan_dollar_string_tag(TSLexer *lexer) {
+static char* scan_dollar_string_tag(TSLexer *lexer) {
   char* tag = NULL;
   int index = 0;
   size_t* text_size = malloc(sizeof(size_t));
@@ -169,7 +169,8 @@ unsigned tree_sitter_sql_external_scanner_serialize(void *payload, char *buffer)
   if (tag_length >= TREE_SITTER_SERIALIZATION_BUFFER_SIZE) {
     return 0;
   }
-  strcpy(buffer, state->start_tag);
+
+  memcpy(buffer, state->start_tag, tag_length);
   if (state->start_tag != NULL) {
     free(state->start_tag);
     state->start_tag = NULL;
@@ -183,6 +184,6 @@ void tree_sitter_sql_external_scanner_deserialize(void *payload, const char *buf
   // A length of 1 can't exists.
   if (length > 1) {
     state->start_tag = malloc(length);
-    strcpy(state->start_tag, buffer);
+    memcpy(state->start_tag, buffer, length);
   }
 }

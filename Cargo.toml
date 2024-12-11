@@ -1,26 +1,27 @@
 [package]
-name = "tree-sitter-sql"
-description = "sql grammar for the tree-sitter parsing library"
-version = "0.0.1"
-keywords = ["incremental", "parsing", "sql"]
-categories = ["parsing", "text-editors"]
-repository = "https://github.com/DerekStride/tree-sitter-sql"
-edition = "2018"
+name = "tree-sitter-sequel"
+description = "Tree-sitter Grammar for SQL"
+version = "0.3.7"
+authors = ["derek stride"]
 license = "MIT"
+readme = "README.md"
+keywords = ["incremental", "parsing", "tree-sitter", "sql"]
+categories = ["parsing", "text-editors"]
+repository = "https://github.com/derekstride/tree-sitter-sql.git"
+edition = "2021"
+autoexamples = false
 
 build = "bindings/rust/build.rs"
-include = [
-  "bindings/rust/*",
-  "grammar.js",
-  "queries/*",
-  "src/*",
-]
+include = ["bindings/rust/*", "grammar.js", "queries/*", "src/*"]
 
 [lib]
 path = "bindings/rust/lib.rs"
 
 [dependencies]
-tree-sitter = "~0.20.3"
+tree-sitter-language = "0.1"
 
 [build-dependencies]
-cc = "1.0"
+cc = "~1.2.1"
+
+[dev-dependencies]
+tree-sitter = "0.24.3"
